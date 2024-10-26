@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canais ao Vivo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .video-container {
+            margin: 20px;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+    </style>
+    <!-- Adiciona o script hls.js para compatibilidade com links m3u8 -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <h1>Canais ao Vivo</h1>
+
+    <!-- Exemplo de um canal com suporte a m3u8 -->
+    <div class="video-container">
+        <h2>Premier</h2>
+        <video id="premier" controls></video>
+    </div>
+
+    <div class="video-container">
+        <h2>Globo SP</h2>
+        <video id="globoSP" controls></video>
+    </div>
+
+    <div class="video-container">
+        <h2>BAND</h2>
+        <video id="band" controls></video>
+    </div>
+
+    <!-- Adicione mais canais conforme necessário... -->
+
+    <script>
+        // Função para configurar o player HLS
+        function setupHLS(videoId, url) {
+            if (Hls.isSupported()) {
+                const video = document.getElementById(videoId);
+                const hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play();
+                });
+            }
+        }
+
+        // Configure os players com os links m3u8
+        setupHLS("premier", "https://new.m3u8.one/pre1/tracks-v1a1/mono.m3u8");
+        setupHLS("globoSP", "https://stream.m3u8.one/globosp/tracks-v1a1/mono.m3u8");
+        setupHLS("band", "https://stream.m3u8.one/band/tracks-v1a1/mono.m3u8");
+
+        // Adicione mais chamadas de setupHLS para outros canais
+        // Exemplo: setupHLS("id_do_video", "url_do_canal");
+    </script>
+</body>
+</html>
